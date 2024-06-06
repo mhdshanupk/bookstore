@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+   
+    
+    <p>{{books.name}}</p>
+    <p><img src="{{books.image.url}}" alt="" style="width: 100px;height: 100px;"></p>
+    <p>{{books.author}}</p>
+    <p>{{books.price}}</p>
+    <p>{{books.type}}</p>
+    {% if books.is_published == True %}
+    <p>published</p>
+    {% else %} 
+    <p>Not published</p>
+    {% endif %}
+    
+    
+    <br>
+
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="comments" col="30" rows="3" placeholder="Enter Your Comment"></textarea>
+        <button type="submit">Add</button>
+    </form>
+    <hr>
+    {% for c in review %}
+        <div class="comments">
+            {{forloop.counter}} {{c.reviews}}
+            {% if c.fk_user == request.user %}
+            <a href="{% url 'review_edit' c.id %}"><button>Edit</button></a>
+            <a href="{% url 'review_delete' c.id %}"><button>Delete</button></a>
+            {% endif %}
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}

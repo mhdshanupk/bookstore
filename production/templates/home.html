@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+    {% block content %}
+    <body>
+        <a href="{% url 'add_book' %}"><button>Add Book</button></a>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <select name="type">
+                <option value="">select</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Engineering">Engineering</option>
+                <option value="PSC">PSC</option>
+                <option value="Politics">Politics</option>
+                <option value="Finance">Finance</option>
+            </select>
+            <input type="search" name="title">
+            <button type="submit">search</button>
+            <table style="border-spacing: 30px;">
+                <tr>
+                    <th>Sl.no</th>
+                    <th>Book name</th>
+                    <th>Author</th>
+                    <th>Book Image</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Publish status</th>
+                    <th>edit/delete</th>
+                </tr>
+                {% for p in book1 %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{p.name}}</td>
+                        <td>{{p.author}}</td>
+                        {% if p.image %}
+                            <td><img src="{{ p.image.url }}" alt="" style="width: 100px;height: 100px;"></td>
+                        {% else %}
+                            <td>Nil</td>
+                        {% endif %}
+                        <td>{{p.price}}</td>
+                        <td>{{p.type}}</td>
+                        <td>{% if p.is_published == True %}
+                            <a href={% url 'publish' id=p.id %}>Published</a>
+                        {% else %}
+                            <a href={% url "publish" id=p.id %}>Not Published</a>
+                        {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'book_edit' id=p.id %}">Edit</a><br>
+                            <a href="{% url 'book_delete' id=p.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </body>
+{% endblock %}

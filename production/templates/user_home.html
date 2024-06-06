@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+    {% block content %}
+    <body>
+        <a href="{% url 'logout' %}"><button>logout</button></a>        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>My Book Store</h2>
+            <br>
+            <select name="type">
+                <option value="">select</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Engineering">Engineering</option>
+                <option value="PSC">PSC</option>
+                <option value="Politics">Politics</option>
+                <option value="Finance">Finance</option>
+            </select>
+            <input type="search"  name="title">
+            <button type="submit">search</button>
+        <table  style="border-spacing: 30px;">
+        <tr>
+            <th>Sl no</th>
+            <th>Image</th>
+            <th>name</th>
+            <th>author</th>
+            <th>Price</th>
+            <th>type</th>
+            <th>Review</th>
+        </tr>
+        {% for v in views %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            {% if v.image %}
+            <td><img src="{{v.image.url}}" alt="" style="width: 100px;height: 100px;"></td>
+            {% else %}
+            <td>Nil</td>
+            {% endif %}
+            <td>{{v.name}}</td>
+            <td>{{v.author}}</td>
+            <td>{{v.price}}</td>
+            <td>{{v.type}}</td>
+            <!-- <td>{{v.Review}}</td> -->
+            <td><a href="{% url 'bookview' id=v.id %}">Review</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    </form>
+    </body>
+{% endblock %}

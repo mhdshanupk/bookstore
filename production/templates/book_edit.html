@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="Name">Name :</label>
+        <input type="text" name="name" value={{book.name}}>
+        <br>
+        <label for="Author">Author</label>
+        <input type="text" name="author" value={{book.author}}>
+        <br>
+        <label for="Cover">Cover :</label>
+        <input type="file" name="photo">
+        <br>
+        
+        <label for="Category">Category</label>
+        <select name="category">
+            <option value="">select</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option valiue="Engineering">Engineering</option>
+            <option value="PSC">PSC</option>
+            <option value="Politics">Politics</option>
+            <option value="Finance">Finance</option>
+        </select>
+        <br>
+        <label for="Price">Price</label>
+        <input type="number" name="price" value={{book.price}}>
+        <br>
+        <button type="submit">edit</button>
+    </form>
+</body>
+{% endblock %}
